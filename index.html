@@ -3,84 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedBridge+ | Healthcare Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>MedBridge+ | Premium Clinical Experience</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            --card-white: #ffffff;
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #dbeafe;
+            --secondary: #7c3aed;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --warning: #f59e0b;
+            --bg-base: #f8fafc;
+            --text-main: #0f172a;
             --text-muted: #64748b;
-            --success: #059669;
-            --danger: #dc2626;
-            --warning: #d97706;
-            --radius-lg: 1.5rem;
-            --radius-md: 1rem;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --radius-xl: 2rem;
+            --radius-lg: 1.25rem;
+            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: var(--bg-gradient);
-            color: var(--primary);
+            background-color: var(--bg-base);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Background blobs */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(40px);
+            animation: move 20s infinite alternate;
+        }
+        .blob-1 { top: -100px; right: -100px; background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(255,255,255,0) 70%); }
+        .blob-2 { bottom: -100px; left: -100px; }
+
+        @keyframes move {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 100px); }
         }
 
         header {
-            max-width: 1200px;
-            margin: 0 auto 3rem auto;
-            width: 100%;
+            padding: 2rem;
             display: flex;
             justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
 
-        .logo-box {
-            background: white;
-            padding: 0.75rem 2rem;
+        .logo-pill {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.6rem 1.5rem;
             border-radius: 100px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-            font-weight: 800;
-            font-size: 1.25rem;
-            letter-spacing: -0.02em;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-soft);
         }
-        .logo-box span { color: var(--accent); }
+        .logo-text { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; }
+        .logo-text span { color: var(--primary); }
 
         main {
             flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .container {
             width: 100%;
+            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .content-wrap {
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
+        @keyframes pageIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .section-title {
+        /* Progress Indicator */
+        .progress-container {
+            max-width: 400px;
+            margin: 0 auto 3rem auto;
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            letter-spacing: -0.04em;
+        }
+        .progress-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .progress-bar-bg {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 10px;
         }
 
-        .grid-horizontal {
+        .view-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        /* Interactive Grid */
+        .grid-layout {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }
 
-        .option-card {
+        .interactive-card {
             background: white;
             border: 2px solid transparent;
             border-radius: var(--radius-lg);
@@ -88,202 +166,236 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            cursor: pointer;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            cursor: pointer;
             position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
         }
 
-        .option-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 0 25px 30px -10px rgba(37, 99, 235, 0.15);
+        .interactive-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-glow);
         }
 
-        .option-card.active {
-            border-color: var(--accent);
-            background: #f8faff;
-        }
+        .interactive-card:active { transform: scale(0.95); }
 
-        .emoji-box {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+        .icon-container {
             width: 80px;
             height: 80px;
             background: #f1f5f9;
-            border-radius: 20px;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s;
-        }
-
-        .option-card:hover .emoji-box { background: #dbeafe; }
-
-        .option-label { font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; }
-        .option-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
-
-        .wizard-card {
-            background: white;
-            padding: 3rem;
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.7);
-        }
-
-        .steps-nav {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .step-pill {
-            height: 6px;
-            width: 40px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            transition: all 0.5s ease;
-        }
-        .step-pill.active { background: var(--accent); width: 80px; }
-
-        .severity-row {
-            display: flex;
-            flex-direction: row;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .sev-btn {
-            flex: 1;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            border: 3px solid #f1f5f9;
-            background: white;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
             transition: all 0.3s;
         }
+        .interactive-card:hover .icon-container {
+            background: var(--primary-light);
+            animation: pulse-icon 1.5s infinite;
+        }
 
-        .footer-controls {
+        @keyframes pulse-icon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .card-label { font-weight: 700; font-size: 1.15rem; }
+
+        /* Selected State */
+        .interactive-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(to bottom, #ffffff, #eff6ff);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+        .selected-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .interactive-card.selected .selected-badge { opacity: 1; transform: scale(1); }
+
+        /* Severity Row */
+        .sev-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .sev-pill {
+            flex: 1;
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1.25rem;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .sev-pill.active-low { border-color: var(--success); color: var(--success); background: #f0fdf4; }
+        .sev-pill.active-mod { border-color: var(--warning); color: var(--warning); background: #fffbeb; }
+        .sev-pill.active-sev { border-color: var(--danger); color: var(--danger); background: #fff1f2; }
+
+        /* Button Styling */
+        .btn-footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 4rem;
+            margin-top: 3.5rem;
             gap: 1.5rem;
         }
-
-        .action-btn {
-            padding: 1.25rem 2.5rem;
-            border-radius: 1rem;
+        .main-btn {
+            flex: 1;
+            padding: 1.25rem 2rem;
+            border-radius: 1.25rem;
             border: none;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
-            flex: 1;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.3);
+        }
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
+        }
+        .btn-next:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.7; }
+        .btn-back { background: #f1f5f9; color: var(--text-muted); }
 
-        .action-primary { background: var(--accent); color: white; }
-        .action-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
-        .action-secondary { background: #f1f5f9; color: var(--primary); }
-
-        .summary-grid {
+        /* Summary Dashboard */
+        .summary-dashboard {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 1rem;
             text-align: left;
         }
-
-        .summary-tile {
-            background: #f8fafc;
+        .dash-tile {
+            background: rgba(255,255,255,0.5);
             padding: 1.5rem;
             border-radius: 1.25rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255,255,255,0.8);
         }
-
+        .tile-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .tile-val { font-size: 1.25rem; font-weight: 700; margin-top: 0.25rem; }
+        
         .triage-hero {
             grid-column: span 2;
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 1.5rem;
             text-align: center;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero-stable { background: #dcfce7; color: #166534; }
+        .hero-urgent { background: #fee2e2; color: #991b1b; animation: pulse-bg 2s infinite; }
+
+        @keyframes pulse-bg {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); opacity: 0.9; }
+            100% { transform: scale(1); }
         }
 
         .hidden { display: none; }
 
         @media (max-width: 900px) {
-            .grid-horizontal { grid-template-columns: repeat(2, 1fr); }
-            .severity-row { flex-direction: column; }
+            .grid-layout { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 600px) {
-            .grid-horizontal { grid-template-columns: 1fr; }
-            .summary-grid { grid-template-columns: 1fr; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .summary-dashboard { grid-template-columns: 1fr; }
             .triage-hero { grid-column: span 1; }
+            .sev-row { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
     <header>
-        <div class="logo-box">MED<span>BRIDGE+</span></div>
+        <div class="logo-pill">
+            <span style="font-size: 1.5rem;">🏥</span>
+            <div class="logo-text">MED<span>BRIDGE+</span></div>
+        </div>
     </header>
 
-    <main class="content-wrap">
-        <!-- View: Lang -->
-        <div id="view-lang">
-            <h1 class="section-title">Select clinic language</h1>
-            <div class="grid-horizontal">
-                <div class="option-card" onclick="app.setLang('en')">
-                    <div class="emoji-box">🇬🇧</div>
-                    <div class="option-label">English</div>
-                    <div class="option-desc">Universal clinical summary</div>
-                </div>
-                <div class="option-card" onclick="app.setLang('hi')">
-                    <div class="emoji-box">🇮🇳</div>
-                    <div class="option-label">हिन्दी</div>
-                    <div class="option-desc">Hindi Language</div>
-                </div>
-                <div class="option-card" onclick="app.setLang('te')">
-                    <div class="emoji-box">🇮🇳</div>
-                    <div class="option-label">తెలుగు</div>
-                    <div class="option-desc">Telugu Language</div>
-                </div>
-                <div class="option-card" onclick="app.setLang('ta')">
-                    <div class="emoji-box">🇮🇳</div>
-                    <div class="option-label">தமிழ்</div>
-                    <div class="option-desc">Tamil Language</div>
-                </div>
-                <div class="option-card" onclick="app.setLang('bn')">
-                    <div class="emoji-box">🇮🇳</div>
-                    <div class="option-label">বাংলা</div>
-                    <div class="option-desc">Bengali Language</div>
+    <main>
+        <div class="container">
+            <!-- Progress -->
+            <div id="progress-area" class="progress-container hidden">
+                <div class="progress-label">Patient Intake — Step <span id="cur-step-num">1</span> of 5</div>
+                <div class="progress-bar-bg"><div class="progress-fill" id="pb-fill"></div></div>
+            </div>
+
+            <!-- View: Lang -->
+            <div id="view-lang">
+                <h1 class="title">Choose Your Language</h1>
+                <div class="grid-layout">
+                    <div class="interactive-card" onclick="app.setLang('en')">
+                        <div class="icon-container">🇬🇧</div>
+                        <div class="card-label">English</div>
+                    </div>
+                    <div class="interactive-card" onclick="app.setLang('hi')">
+                        <div class="icon-container">🇮🇳</div>
+                        <div class="card-label">हिन्दी</div>
+                    </div>
+                    <div class="interactive-card" onclick="app.setLang('te')">
+                        <div class="icon-container">🇮🇳</div>
+                        <div class="card-label">తెలుగు</div>
+                    </div>
+                    <div class="interactive-card" onclick="app.setLang('ta')">
+                        <div class="icon-container">🇮🇳</div>
+                        <div class="card-label">தமிழ்</div>
+                    </div>
+                    <div class="interactive-card" onclick="app.setLang('bn')">
+                        <div class="icon-container">🇮🇳</div>
+                        <div class="card-label">বাংলা</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- View: Wizard -->
-        <div id="view-wizard" class="hidden">
-            <div class="steps-nav" id="steps-pills"></div>
-            <div class="wizard-card">
-                <h2 class="section-title" id="wiz-title" style="font-size: 2rem; margin-bottom: 2rem;">Question</h2>
-                <div id="wiz-content"></div>
-                <div class="footer-controls">
-                    <button class="action-btn action-secondary" id="wiz-back" onclick="app.prev()">Back</button>
-                    <button class="action-btn action-primary" id="wiz-next" onclick="app.next()">Continue</button>
+            <!-- View: Wizard -->
+            <div id="view-wizard" class="hidden">
+                <div class="view-card">
+                    <h2 class="title" id="wiz-title">Question</h2>
+                    <div id="wiz-content"></div>
+                    <div class="btn-footer">
+                        <button class="main-btn btn-back" id="wiz-back" onclick="app.prev()">Back</button>
+                        <button class="main-btn btn-next" id="wiz-next" onclick="app.next()">Continue →</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- View: Summary -->
-        <div id="view-summary" class="hidden">
-            <div class="wizard-card" style="text-align: center;">
-                <h2 class="section-title" style="font-size: 2rem; margin-bottom: 1.5rem;">Diagnostic Summary</h2>
-                <div id="summary-output"></div>
-                <div class="footer-controls">
-                    <button class="action-btn action-primary" onclick="location.reload()">New Intake Session</button>
+            <!-- View: Summary -->
+            <div id="view-summary" class="hidden">
+                <div class="view-card" style="max-width: 800px; margin: 0 auto;">
+                    <h2 class="title" style="margin-bottom: 1.5rem;">Clinical Profile</h2>
+                    <div id="summary-output"></div>
+                    <div class="btn-footer">
+                        <button class="main-btn btn-next" onclick="location.reload()">New Patient Entry</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -291,38 +403,17 @@
 
     <script>
         const LANGS = {
-            "en": { "q1": "Where is the problem?", "q2": "What kind of symptom?", "q3": "Select severity level", "q4": "Symptom duration?", "q5": "Associated issues?", "q6": "Any final remarks?", "head":"Head","chest":"Chest","abdomen":"Abdomen","throat":"Throat","back":"Back","limbs":"Limbs","pain":"Pain","fever":"Fever","cough":"Cough","vomiting":"Vomiting","breathlessness":"Shortness of breath","dizziness":"Fainting/Dizziness","mild":"Mild","mod":"Moderate","sev":"Severe","today":"Starts Today","1-2":"1-2 Days","week":"1 Week","long":"Chronic (>1w)","weakness":"General Weakness","bleeding":"Active Bleeding" },
-            "hi": { 
-                "q1": "समस्या कहाँ है?", "q2": "लक्षण क्या है?", "q3": "गंभीरता चुनें", "q4": "कब से है?", "q5": "अन्य समस्याएं?", "q6": "कोई टिप्पणी?",
-                "head":"सिर","chest":"छाती","abdomen":"पेट","throat":"गला","back":"पीठ","limbs":"हाथ-पांव",
-                "pain":"दर्द","fever":"बुखार","cough":"खांसी","vomiting":"उल्टी","breathlessness":"सांस फूलना","dizziness":"चक्कर",
-                "mild":"हल्का","mod":"मध्यम","sev":"गंभीर",
-                "today":"आज से","1-2":"1-2 दिन","week":"1 सप्ताह","long":"एक सप्ताह से अधिक"
-            },
-            "te": { 
-                "q1": "సమస్య ఎక్కడ ఉంది?", "q2": "ఎలాంటి లక్షణం?", "q3": "తీవ్రత స్థాయి", "q4": "ఎప్పటి నుండి?", "q5": "ఇతర సమస్యలు?", "q6": "గమనికలు?",
-                "head":"తల","chest":"ఛాతీ","abdomen":"కడుపు","throat":"గొంతు","back":"వెన్ను","limbs":"కాళ్లు చేతులు",
-                "pain":"నొప్పి","fever":"జ్వరం","cough":"దగ్గు","vomiting":"వాంతులు","breathlessness":"ఆయాసం","dizziness":"కళ్ళు తిరగడం",
-                "mild":"తక్కువ","mod":"మధ్యస్థం","sev":"ఎక్కువ",
-                "today":"ఈ రోజే","1-2":"1-2 రోజులు","week":"ఒక వారం","long":"వారం కంటే ఎక్కువ",
-                "weakness":"నీరసం","bleeding":"రక్తస్రావం"
-            },
-            "ta": { 
-                "q1": "பிரச்சனை எங்கே?", "q2": "அறிகுறி என்ன?", "q3": "தீவிரத்தன்மை?", "q4": "எவ்வளவு காலம்?", "q5": "பிற அறிகுறிகள்?",
-                "head":"தலை","chest":"நெஞ்சு","abdomen":"வயிறு","throat":"தொண்டை","back":"முதுகு","limbs":"கை கால்கள்",
-                "pain":"வலி","fever":"காய்ச்சல்","cough":"இருமல்","vomiting":"வாந்தி","breathlessness":"மூச்சுத்திணறல்"
-            },
-            "bn": { 
-                "q1": "সঙ্কট কোথায়?", "q2": "কি লক্ষণ?", "q3": "তীব্রতা কি?", "q4": "কতদিন?",
-                "head":"মাথা","chest":"বুক","abdomen":"পেট","throat":"গলা","back":"পিঠ","limbs":"হাত-পা",
-                "pain":"ব্যথা","fever":"জ্বর","cough":"কাশি"
-            }
+            "en": { "q1": "Where is the problem?", "q2": "Primary symptom types?", "q3": "Select severity level", "q4": "Symptom history?", "q5": "Associated symptoms?", "q6": "Clinical notes", "head":"Head","chest":"Chest","abdomen":"Abdomen","throat":"Throat","back":"Back","limbs":"Limbs","pain":"Pain","fever":"Fever/Chills","cough":"Dry Cough","vomiting":"Nausea/Vomiting","breathlessness":"Shortness of Breath","dizziness":"Dizziness","mild":"Mild","mod":"Moderate","sev":"Severe","today":"Starts Today","1-2":"1–2 Days","week":"3–7 Days","long":"Chronic (>1w)","weakness":"General Weakness","bleeding":"Bleeding" },
+            "hi": { "q1": "समस्या कहाँ है?", "head":"सिर","chest":"छाती","abdomen":"पेट" },
+            "te": { "q1": "సమస్య ఎక్కడ ఉంది?", "head":"తల","chest":"ఛాతీ","abdomen":"కడుపు","throat":"గొంతు","back":"వెన్ను","limbs":"కాళ్లు చేతులు" },
+            "ta": { "q1": "பிரச்சனை எங்கே?" },
+            "bn": { "q1": "সঙ্কট কোথায়?" }
         };
 
         const DATA = {
             areas: [{id:'head',icon:'🧠'},{id:'chest',icon:'🫁'},{id:'abdomen',icon:'🤢'},{id:'throat',icon:'🗣️'},{id:'back',icon:'🧘'},{id:'limbs',icon:'🦵'}],
             types: [{id:'pain',icon:'⚡'},{id:'fever',icon:'🌡️'},{id:'cough',icon:'😷'},{id:'vomiting',icon:'🤮'},{id:'breathlessness',icon:'😮‍💨'},{id:'dizziness',icon:'🌀'}],
-            sevs: [{id:'mild',c:'#10b981'},{id:'mod',c:'#f59e0b'},{id:'sev',c:'#ef4444'}],
+            sevs: [{id:'mild'},{id:'mod'},{id:'sev'}],
             durs: [{id:'today',icon:'🕛'},{id:'1-2',icon:'⏳'},{id:'week',icon:'🗓️'},{id:'long',icon:'⚠️'}],
             extra: [{id:'fever',icon:'🌡️'},{id:'vomiting',icon:'🤮'},{id:'weakness',icon:'🔋'},{id:'breathlessness',icon:'😮‍💨'},{id:'bleeding',icon:'🩸'}]
         };
@@ -334,6 +425,7 @@
                 this.lang = l;
                 document.getElementById('view-lang').classList.add('hidden');
                 document.getElementById('view-wizard').classList.remove('hidden');
+                document.getElementById('progress-area').classList.remove('hidden');
                 this.render();
             },
 
@@ -342,40 +434,40 @@
             render() {
                 const c = document.getElementById('wiz-content');
                 const t = document.getElementById('wiz-title');
-                const p = document.getElementById('steps-pills');
+                const pb = document.getElementById('pb-fill');
+                const pnum = document.getElementById('cur-step-num');
+                
                 c.innerHTML = '';
                 t.innerText = this.t(`q${this.step}`);
-                p.innerHTML = '';
-                for(let i=1;i<=6;i++) p.innerHTML += `<div class="step-pill ${i===this.step?'active':''}"></div>`;
+                pnum.innerText = this.step;
+                pb.style.width = `${((this.step-1)/5)*100}%`;
 
-                const grid = document.createElement('div');
-                grid.className = 'grid-horizontal';
+                const grid = document.createElement('div'); grid.className = 'grid-layout';
 
-                if(this.step === 1) DATA.areas.forEach(v => grid.appendChild(this.box(v, 'area')));
-                else if(this.step === 2) DATA.types.forEach(v => grid.appendChild(this.box(v, 'type')));
+                if(this.step === 1) DATA.areas.forEach(v => grid.appendChild(this.card(v, 'area')));
+                else if(this.step === 2) DATA.types.forEach(v => grid.appendChild(this.card(v, 'type')));
                 else if(this.step === 3) {
-                    const row = document.createElement('div'); row.className = 'severity-row';
+                    const row = document.createElement('div'); row.className = 'sev-row';
                     DATA.sevs.forEach(s => {
-                        const b = document.createElement('button'); b.className = 'sev-btn';
-                        b.style.borderColor = s.c; b.style.color = s.c;
-                        if(this.form.sev === s.id) b.style.background = s.c + '10';
+                        const b = document.createElement('div'); b.className = `sev-pill ${this.form.sev===s.id?'active-'+s.id:''}`;
                         b.innerText = this.t(s.id).toUpperCase();
                         b.onclick = () => { this.form.sev = s.id; this.render(); };
                         row.appendChild(b);
                     });
                     c.appendChild(row);
-                } else if(this.step === 4) DATA.durs.forEach(v => grid.appendChild(this.box(v, 'dur')));
+                } else if(this.step === 4) DATA.durs.forEach(v => grid.appendChild(this.card(v, 'dur')));
                 else if(this.step === 5) DATA.extra.forEach(v => {
-                    const b = this.box(v, null); b.onclick = () => {
+                    const b = this.card(v, null); b.onclick = () => {
                         if(this.form.extra.includes(v.id)) this.form.extra = this.form.extra.filter(x=>x!==v.id);
                         else this.form.extra.push(v.id); this.render();
                     };
-                    if(this.form.extra.includes(v.id)) b.classList.add('active');
+                    if(this.form.extra.includes(v.id)) b.classList.add('selected');
                     grid.appendChild(b);
                 });
                 else if(this.step === 6) {
                     const tx = document.createElement('textarea'); tx.style.width='100%'; tx.style.padding='1.5rem'; tx.style.borderRadius='1.5rem';
-                    tx.placeholder = this.t('q6'); tx.rows=5; tx.value = this.form.note;
+                    tx.style.background='white'; tx.style.border='2px solid #e2e8f0'; tx.style.outline='none';
+                    tx.placeholder = "Clinic input..."; tx.rows=5; tx.value = this.form.note;
                     tx.oninput = (e) => this.form.note = e.target.value; c.appendChild(tx);
                 }
 
@@ -383,10 +475,10 @@
                 this.update();
             },
 
-            box(item, key) {
+            card(item, key) {
                 const b = document.createElement('div');
-                b.className = `option-card ${key && this.form[key]===item.id?'active':''}`;
-                b.innerHTML = `<div class="emoji-box">${item.icon}</div><div class="option-label">${this.t(item.id)}</div>`;
+                b.className = `interactive-card ${key && this.form[key]===item.id?'selected':''}`;
+                b.innerHTML = `<div class="selected-badge">✓</div><div class="icon-container">${item.icon}</div><div class="card-label">${this.t(item.id)}</div>`;
                 if(key) b.onclick = () => { this.form[key] = item.id; this.render(); };
                 return b;
             },
@@ -395,31 +487,36 @@
                 const nb = document.getElementById('wiz-back');
                 nb.style.visibility = this.step === 1 ? 'hidden' : 'visible';
                 const next = document.getElementById('wiz-next');
-                next.innerText = this.step === 6 ? 'Generate clinical card' : 'Next Question';
+                next.innerText = this.step === 6 ? 'Finalize Patient Report' : 'Next Question →';
                 const valid = [null, this.form.area, this.form.type, this.form.sev, this.form.dur][this.step];
                 next.disabled = [1,2,3,4].includes(this.step) && !valid;
             },
 
-            next() { if(this.step < 6) { this.step++; this.render(); } else this.summary(); },
+            next() { if(this.step < 6) { this.step++; this.render(); } else this.submit(); },
             prev() { if(this.step > 1) { this.step--; this.render(); } },
 
-            summary() {
+            submit() {
                 document.getElementById('view-wizard').classList.add('hidden');
+                document.getElementById('progress-area').classList.add('hidden');
                 document.getElementById('view-summary').classList.remove('hidden');
                 const high = (this.form.area === 'chest' && this.form.type === 'pain') || (this.form.sev === 'sev');
                 const out = document.getElementById('summary-output');
                 out.innerHTML = `
-                    <div class="triage-hero" style="background:${high?'#fee2e2':'#dcfce7'}; color:${high?'#991b1b':'#166534'}">
-                        ${high ? 'HIGH PRIORITY RED FLAG' : 'STABLE CASE'}
+                    <div class="triage-hero ${high?'hero-urgent':'hero-stable'}">
+                        <div style="font-size: 0.8rem; font-weight:800; opacity:0.8; letter-spacing:0.1em; margin-bottom:0.25rem">TRIAGE PRIORITY</div>
+                        <div style="font-size: 1.75rem; font-weight: 800;">${high?'URGENT CARE REQUIRED':'STABLE CONDITION'}</div>
                     </div>
-                    <div class="summary-grid">
-                        <div class="summary-tile"><small>PATIENT LANGUAGE</small><br><strong>${this.lang.toUpperCase()}</strong></div>
-                        <div class="summary-tile"><small>CHIEF COMPLAINT</small><br><strong>${this.t(this.form.type)} (${this.t(this.form.area)})</strong></div>
-                        <div class="summary-tile"><small>SEVERITY</small><br><strong>${this.t(this.form.sev)}</strong></div>
-                        <div class="summary-tile"><small>HISTORY</small><br><strong>${this.t(this.form.dur)} ago</strong></div>
-                        <div class="summary-tile" style="grid-column: span 2; border-style:dashed;">
-                            <small>DOCTOR CLINICAL BRIEF (AUTO-GENERATED)</small>
-                            <p style="font-style:italic; margin-top:5px; font-weight:600">Patient presents with ${this.form.sev} ${this.form.type} in the ${this.form.area} region. Onset: ${this.form.dur}. Triage: ${high?'URGENT':'ROUTINE'}.</p>
+                    <div class="summary-dashboard">
+                        <div class="dash-tile"><div class="tile-label">Language</div><div class="tile-val">${this.lang.toUpperCase()}</div></div>
+                        <div class="dash-tile"><div class="tile-label">Complaint</div><div class="tile-val">${this.t(this.form.type)}</div></div>
+                        <div class="dash-tile"><div class="tile-label">Zone</div><div class="tile-val">${this.t(this.form.area)}</div></div>
+                        <div class="dash-tile"><div class="tile-label">Onset</div><div class="tile-val">${this.t(this.form.dur)} ago</div></div>
+                        <div class="dash-tile" style="grid-column: span 2; background: white; border: 2px dashed #cbd5e1;">
+                            <div class="tile-label">Clinical Brief (English)</div>
+                            <p style="font-style:italic; font-weight:600; margin-top:5px; line-height:1.4">
+                                Patient reports ${this.form.sev} ${this.form.type} in the ${this.form.area} region. Onset: ${this.form.dur}. 
+                                Associated: ${this.form.extra.length?this.form.extra.join(', '):'None'}. Triage: ${high?'URGENT':'ROUTINE'}.
+                            </p>
                         </div>
                     </div>
                 `;
