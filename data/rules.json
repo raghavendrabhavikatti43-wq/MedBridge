@@ -1,0 +1,38 @@
+[
+  {
+    "conditions": {
+      "bodyArea": "chest",
+      "symptomType": "pain",
+      "associatedSymptoms": ["breathlessness"]
+    },
+    "priority": "high",
+    "message": "Immediate Medical Attention Required - Possible Cardiac Issue"
+  },
+  {
+    "conditions": {
+      "symptomType": "fever",
+      "associatedSymptoms": ["breathlessness"]
+    },
+    "priority": "high",
+    "message": "Severe Respiratory Infection Warning"
+  },
+  {
+    "conditions": {
+      "bodyArea": "abdomen",
+      "symptomType": "vomiting",
+      "severity": "severe"
+    },
+    "priority": "high",
+    "message": "Acute Abdominal Distress - High Priority"
+  },
+  {
+    "conditions": {
+      "bodyArea": "head",
+      "symptomType": "pain",
+      "associatedSymptoms": ["vomiting"],
+      "severity": "severe"
+    },
+    "priority": "high",
+    "message": "Severe Neurological Concern"
+  }
+]

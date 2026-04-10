@@ -1,0 +1,20 @@
+{
+  "name": "medbridge-plus",
+  "version": "1.0.0",
+  "description": "Multilingual Symptom Intake and Triage Assistant for Indian Clinics",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -o"
+  },
+  "keywords": [
+    "healthcare",
+    "multilingual",
+    "triage",
+    "vanilla-js"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

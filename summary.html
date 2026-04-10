@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBridge+ | Clinical Summary</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">MedBridge+</div>
+    </header>
+
+    <main>
+        <div class="card summary-card">
+            <h2 class="title" style="text-align: center;" id="summary-main-title">Doctor Summary Card</h2>
+            
+            <div id="summary-content">
+                <!-- Summary details injected by JS -->
+            </div>
+
+            <div class="nav-buttons" style="flex-direction: column; gap: 1rem;">
+                <button class="nav-btn nav-btn-primary" onclick="window.location.href='index.html'" id="btn-new">New Intake</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <h3 class="title" id="history-title">Recent History</h3>
+            <div id="history-container">
+                <!-- History items injected by JS -->
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            app.initSummary();
+        });
+    </script>
+</body>
+</html>

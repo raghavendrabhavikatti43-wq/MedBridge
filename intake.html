@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBridge+ | Symptom Intake</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">MedBridge+</div>
+    </header>
+
+    <main>
+        <div class="step-indicator" id="step-dots">
+            <!-- Dots injected by JS -->
+        </div>
+
+        <div class="card" id="wizard-container">
+            <h2 class="title" id="step-title">Step Title</h2>
+            
+            <div id="step-content">
+                <!-- Content injected by JS -->
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn nav-btn-secondary" id="btn-back" onclick="app.prevStep()">Back</button>
+                <button class="nav-btn nav-btn-primary" id="btn-next" onclick="app.nextStep()">Next</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            app.initIntake();
+        });
+    </script>
+</body>
+</html>

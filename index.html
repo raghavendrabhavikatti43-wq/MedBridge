@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBridge+ | Multilingual Symptom Intake</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --success-color: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background-color: var(--card-bg); padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary-color); }
+        main { flex: 1; padding: 2rem 1rem; max-width: 600px; margin: 0 auto; width: 100%; }
+        .card { background: var(--card-bg); border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; margin-bottom: 2rem; }
+        .title { margin-bottom: 1.5rem; font-size: 1.25rem; color: var(--text-color); }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem 1rem; border: 2px solid var(--border-color); border-radius: 0.75rem; background: white; cursor: pointer; transition: all 0.2s ease; gap: 0.5rem; }
+        .btn:hover { border-color: var(--primary-color); background-color: #eff6ff; }
+        .btn.active { border-color: var(--primary-color); background-color: #dbeafe; box-shadow: 0 0 0 2px var(--primary-color); }
+        .btn-icon { font-size: 2.2rem; }
+        .btn-text { font-weight: 600; font-size: 0.95rem; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; gap: 1rem; }
+        .nav-btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer; flex: 1; }
+        .nav-btn-primary { background-color: var(--primary-color); color: white; }
+        .nav-btn-secondary { background-color: var(--border-color); color: var(--text-color); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .step-indicator { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .step-dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--border-color); }
+        .step-dot.active { background-color: var(--primary-color); width: 24px; border-radius: 4px; }
+        .severity-meter { display: flex; flex-direction: column; gap: 0.75rem; }
+        .summary-item { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+        .summary-label { font-size: 0.8rem; color: var(--text-muted); display: block; }
+        .summary-value { font-weight: 600; font-size: 1rem; }
+        .triage-badge { padding: 0.4rem 0.8rem; border-radius: 2rem; font-weight: bold; font-size: 0.85rem; display: inline-block; margin-top: 0.4rem; }
+        .triage-high { background-color: #fee2e2; color: #991b1b; }
+        .triage-mod { background-color: #fef3c7; color: #92400e; }
+        .triage-low { background-color: #dcfce7; color: #166534; }
+        textarea { width: 100%; padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border-color); font-size: 1rem; resize: vertical; }
+        .history-item { padding: 1rem; background: #f1f5f9; border-radius: 0.5rem; margin-bottom: 1rem; text-align: left; font-size: 0.9rem; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <header><div class="logo">MedBridge+</div></header>
+
+    <main>
+        <!-- VIEW 1: Language Selection -->
+        <div id="view-lang" class="card">
+            <h1 class="title">Choose Your Language</h1>
+            <div class="grid">
+                <button class="btn" onclick="app.selectLang('en')"><span class="btn-icon">🇬🇧</span><span class="btn-text">English</span></button>
+                <button class="btn" onclick="app.selectLang('hi')"><span class="btn-icon">🇮🇳</span><span class="btn-text">हिन्दी</span></button>
+                <button class="btn" onclick="app.selectLang('te')"><span class="btn-icon">🇮🇳</span><span class="btn-text">తెలుగు</span></button>
+                <button class="btn" onclick="app.selectLang('ta')"><span class="btn-icon">🇮🇳</span><span class="btn-text">தமிழ்</span></button>
+                <button class="btn" onclick="app.selectLang('bn')"><span class="btn-icon">🇮🇳</span><span class="btn-text">বাংলা</span></button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: Intake Wizard -->
+        <div id="view-intake" class="hidden">
+            <div class="step-indicator" id="step-dots"></div>
+            <div class="card">
+                <h2 class="title" id="step-title">Step Title</h2>
+                <div id="step-content"></div>
+                <div class="nav-buttons">
+                    <button class="nav-btn nav-btn-secondary" id="btn-back" onclick="app.prevStep()">Back</button>
+                    <button class="nav-btn nav-btn-primary" id="btn-next" onclick="app.nextStep()">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: Summary -->
+        <div id="view-summary" class="hidden">
+            <div class="card">
+                <h2 class="title" id="summary-main-title">Doctor Summary Card</h2>
+                <div id="summary-content"></div>
+                <div class="nav-buttons">
+                    <button class="nav-btn nav-btn-primary" onclick="app.reset()">New Intake</button>
+                </div>
+            </div>
+            <h3 class="title" style="text-align: center;" id="history-title">Recent History</h3>
+            <div id="history-container"></div>
+        </div>
+    </main>
+
+    <script>
+        const LANGUAGES = {
+            "en": { "welcome": "Welcome", "select_language": "Choose Your Language", "next": "Next", "back": "Back", "submit": "Submit", "step_1": "Select Body Area", "step_2": "Select Symptom Type", "step_3": "Severity", "step_4": "Duration", "step_5": "Associated Symptoms", "step_6": "Additional Notes", "head": "Head", "chest": "Chest", "abdomen": "Abdomen", "throat": "Throat", "back": "Back", "limbs": "Limbs", "pain": "Pain", "fever": "Fever", "cough": "Cough", "vomiting": "Vomiting", "breathlessness": "Breathlessness", "dizziness": "Dizziness", "mild": "Mild", "moderate": "Moderate", "severe": "Severe", "today": "Today", "1_2_days": "1–2 days", "3_7_days": "3–7 days", "plus_1_week": ">1 week", "weakness": "Weakness", "bleeding": "Bleeding", "summary_title": "Doctor Summary Card", "priority": "Priority", "low": "LOW", "mod": "MODERATE", "high": "HIGH", "red_flag": "Red Flag", "yes": "Yes", "no": "No", "view_history": "View History" },
+            "hi": { "welcome": "स्वागत है", "select_language": "भाषा चुनें", "next": "अगला", "back": "पीछे", "submit": "जमा करें", "step_1": "शरीर का क्षेत्र", "step_2": "लक्षण का प्रकार", "step_3": "तीव्रता", "step_4": "अवधि", "step_5": "जुड़े हुए लक्षण", "step_6": "नोट्स", "head": "सिर", "chest": "छाती", "abdomen": "पेट", "throat": "गला", "back": "पीठ", "limbs": "अंग", "pain": "दर्द", "fever": "बुखार", "cough": "खांसी", "vomiting": "उल्टी", "breathlessness": "सांस फूलना", "dizziness": "चक्कर", "mild": "हल्का", "moderate": "मध्यम", "severe": "गंभीर", "today": "आज", "1_2_days": "1-2 दिन", "3_7_days": "3-7 दिन", "plus_1_week": ">1 सप्ताह", "weakness": "कमजोरी", "bleeding": "रक्तस्राव", "summary_title": "डॉक्टर सारांश", "priority": "प्राथमिकता", "low": "कम", "mod": "मध्यम", "high": "उच्च", "red_flag": "खतरे", "yes": "हाँ", "no": "नहीं", "view_history": "इतिहास" },
+            "te": { "welcome": "స్వాగతం", "select_language": "భాషను ఎంచుకోండి", "next": "తదుపరి", "back": "వెనుకకు", "submit": "సమర్పించండి", "step_1": "శరీర భాగం", "step_2": "లక్షణ రకం", "step_3": "తీవ్రత", "step_4": "వ్యవధి", "step_5": "సంబంధిత లక్షణాలు", "step_6": "గమనికలు", "head": "తల", "chest": "ఛాతీ", "abdomen": "కడుపు", "throat": "గొంతు", "back": "వెన్ను", "limbs": "కాలు/చేయి", "pain": "నొప్పి", "fever": "జ్వరం", "cough": "దగ్గు", "vomiting": "వాంతులు", "breathlessness": "ఆయాసం", "dizziness": "కళ్ళు తిరగడం", "mild": "తక్కువ", "moderate": "మధ్యస్థం", "severe": "ఎక్కువ", "today": "ఈ రోజు", "1_2_days": "1–2 రోజులు", "3_7_days": "3–7 రోజులు", "plus_1_week": ">1 వారం", "weakness": "నీరసం", "bleeding": "రక్తస్రావం", "summary_title": "డాక్టర్ సారాంశం", "priority": "ప్రాధాన్యత", "low": "తక్కువ", "mod": "మధ్యస్థం", "high": "ఎక్కువ", "red_flag": "ప్రమాదం", "yes": "అవును", "no": "కాదు", "view_history": "చరిత్ర" },
+            "ta": { "welcome": "வரவேற்கிறோம்", "select_language": "மொழியைத் தேர்ந்தெடுக்கவும்", "next": "அடுத்து", "back": "பின்புறம்", "submit": "சமர்ப்பிக்கவும்", "step_1": "உடல் பகுதி", "step_2": "அறிகுறி வகை", "step_3": "தீவிரத்தன்மை", "step_4": "கால அளவு", "step_5": "தொடர்புடைய அறிகுறிகள்", "step_6": "குறிப்புகள்", "head": "தலை", "chest": "நெஞ்சு", "abdomen": "வயிறு", "throat": "தொண்டை", "back": "முதுகு", "limbs": "கை கால்கள்", "pain": "வலி", "fever": "காய்ச்சல்", "cough": "இருமல்", "vomiting": "வாந்தி", "breathlessness": "மூச்சுத்திணறல்", "dizziness": "தலைச்சுற்றல்", "mild": "மிதமான", "moderate": "நடுத்தர", "severe": "கடுமையான", "today": "இன்று", "1_2_days": "1-2 நாட்கள்", "3_7_days": "3-7 நாட்கள்", "plus_1_week": ">1 வாரம்", "weakness": "பலவீனம்", "bleeding": "இரத்தப்போக்கு", "summary_title": "மருத்துவர் சுருக்கம்", "priority": "முன்னுரிமை", "low": "குறைந்த", "mod": "நடுத்தர", "high": "அதிக", "red_flag": "ஆபத்து", "yes": "ஆம்", "no": "இல்லை", "view_history": "வரலாறு" },
+            "bn": { "welcome": "স্বাগতম", "select_language": "ভাষা চয়ন করুন", "next": "পরবর্তী", "back": "পিছনে", "submit": "জমা দিন", "step_1": "শরীরের অংশ", "step_2": "লক্ষণ", "step_3": "তীব্রতা", "step_4": "সময়কাল", "step_5": "সংশ্লিষ্ট লক্ষণ", "step_6": "তথ্য", "head": "মাথা", "chest": "বুক", "abdomen": "পেট", "throat": "গলা", "back": "পিঠ", "limbs": "হাত-পা", "pain": "ব্যথা", "fever": "জ্বর", "cough": "কাশি", "vomiting": "বমি", "breathlessness": "শ্বাসকষ্ট", "dizziness": "মাথা ঘোরা", "mild": "সামান্য", "moderate": "মাঝারি", "severe": "তীব্র", "today": "আজ", "1_2_days": "১-২ দিন", "3_7_days": "৩-৭ দিন", "plus_1_week": ">১ সপ্তাহ", "weakness": "দুর্বলতা", "bleeding": "রক্তপাত", "summary_title": "ডাক্তারের সারাংশ", "priority": "অগ্রাধিকার", "low": "কম", "mod": "মাঝারি", "high": "উচ্চ", "red_flag": "বিপদ", "yes": "হ্যাঁ", "no": "না", "view_history": "ইতিহাস" }
+        };
+
+        const SYMPTOMS = {
+            bodyAreas: [{id:'head',icon:'🧠'},{id:'chest',icon:'🫁'},{id:'abdomen',icon:'🤢'},{id:'throat',icon:'🗣️'},{id:'back',icon:'🧘'},{id:'limbs',icon:'🦵'}],
+            symptomTypes: [{id:'pain',icon:'⚡'},{id:'fever',icon:'🌡️'},{id:'cough',icon:'😷'},{id:'vomiting',icon:'🤮'},{id:'breathlessness',icon:'😮‍💨'},{id:'dizziness',icon:'🌀'}],
+            severities: [{id:'mild',color:'#4caf50'},{id:'moderate',color:'#ff9800'},{id:'severe',color:'#f44336'}],
+            durations: [{id:'today'},{id:'1_2_days'},{id:'3_7_days'},{id:'plus_1_week'}],
+            associated: [{id:'fever',icon:'🌡️'},{id:'vomiting',icon:'🤮'},{id:'weakness',icon:'🔋'},{id:'breathlessness',icon:'😮‍💨'},{id:'bleeding',icon:'🩸'}]
+        };
+
+        const RULES = [
+            { cond: { bodyArea: "chest", symptomType: "pain", associated: ["breathlessness"] }, priority: "high", msg: "Possible Cardiac Alert - Seek Emergency Care" },
+            { cond: { symptomType: "fever", associated: ["breathlessness"] }, priority: "high", msg: "Severe Respiratory Warning" },
+            { cond: { bodyArea: "abdomen", symptomType: "vomiting", severity: "severe" }, priority: "high", msg: "Acute Abdominal Distress" },
+            { cond: { bodyArea: "head", symptomType: "pain", associated: ["vomiting"], severity: "severe" }, priority: "high", msg: "Severe Neurological Concern" }
+        ];
+
+        const app = {
+            currentStep: 1,
+            selectedLang: 'en',
+            state: { bodyArea: null, symptomType: null, severity: null, duration: null, associated: [], notes: '' },
+
+            selectLang(lang) {
+                this.selectedLang = lang;
+                document.getElementById('view-lang').classList.add('hidden');
+                document.getElementById('view-intake').classList.remove('hidden');
+                this.renderStep();
+            },
+
+            t(key) { return LANGUAGES[this.selectedLang][key] || key; },
+
+            renderStep() {
+                const content = document.getElementById('step-content');
+                const title = document.getElementById('step-title');
+                content.innerHTML = '';
+                title.innerText = this.t(`step_${this.currentStep}`);
+                this.updateDots();
+
+                const grid = document.createElement('div');
+                grid.className = 'grid';
+
+                if (this.currentStep === 1) {
+                    SYMPTOMS.bodyAreas.forEach(a => grid.appendChild(this.btn(a.icon, this.t(a.id), () => { this.state.bodyArea = a.id; this.renderStep(); }, this.state.bodyArea === a.id)));
+                    content.appendChild(grid);
+                } else if (this.currentStep === 2) {
+                    SYMPTOMS.symptomTypes.forEach(t => grid.appendChild(this.btn(t.icon, this.t(t.id), () => { this.state.symptomType = t.id; this.renderStep(); }, this.state.symptomType === t.id)));
+                    content.appendChild(grid);
+                } else if (this.currentStep === 3) {
+                    const box = document.createElement('div'); box.className = 'severity-meter';
+                    SYMPTOMS.severities.forEach(s => {
+                        const b = document.createElement('button'); b.className = `btn ${this.state.severity === s.id ? 'active' : ''}`;
+                        b.style.borderColor = s.color; b.innerHTML = `<span class="btn-text" style="color:${s.color}">${this.t(s.id).toUpperCase()}</span>`;
+                        b.onclick = () => { this.state.severity = s.id; this.renderStep(); }; box.appendChild(b);
+                    });
+                    content.appendChild(box);
+                } else if (this.currentStep === 4) {
+                    const box = document.createElement('div'); box.className = 'severity-meter';
+                    SYMPTOMS.durations.forEach(d => {
+                        const b = document.createElement('button'); b.className = `btn ${this.state.duration === d.id ? 'active' : ''}`;
+                        b.innerHTML = `<span class="btn-text">${this.t(d.id)}</span>`;
+                        b.onclick = () => { this.state.duration = d.id; this.renderStep(); }; box.appendChild(b);
+                    });
+                    content.appendChild(box);
+                } else if (this.currentStep === 5) {
+                    SYMPTOMS.associated.forEach(a => grid.appendChild(this.btn(a.icon, this.t(a.id), () => {
+                        const idx = this.state.associated.indexOf(a.id);
+                        if (idx > -1) this.state.associated.splice(idx, 1); else this.state.associated.push(a.id);
+                        this.renderStep();
+                    }, this.state.associated.includes(a.id))));
+                    content.appendChild(grid);
+                } else if (this.currentStep === 6) {
+                    const txt = document.createElement('textarea'); txt.placeholder = "..."; txt.rows = 5; txt.value = this.state.notes;
+                    txt.oninput = (e) => this.state.notes = e.target.value; content.appendChild(txt);
+                }
+                this.updateNav();
+            },
+
+            btn(icon, text, onClick, active) {
+                const b = document.createElement('button'); b.className = `btn ${active ? 'active' : ''}`;
+                b.innerHTML = `<span class="btn-icon">${icon}</span><span class="btn-text">${text}</span>`;
+                b.onclick = onClick; return b;
+            },
+
+            updateDots() {
+                const c = document.getElementById('step-dots'); c.innerHTML = '';
+                for (let i = 1; i <= 6; i++) {
+                    const d = document.createElement('div'); d.className = `step-dot ${i === this.currentStep ? 'active' : ''}`; c.appendChild(d);
+                }
+            },
+
+            updateNav() {
+                document.getElementById('btn-back').disabled = this.currentStep === 1;
+                document.getElementById('btn-next').innerText = this.currentStep === 6 ? this.t('submit') : this.t('next');
+                const req = [1,2,3,4].includes(this.currentStep);
+                const val = [null, this.state.bodyArea, this.state.symptomType, this.state.severity, this.state.duration][this.currentStep];
+                document.getElementById('btn-next').disabled = req && !val;
+            },
+
+            nextStep() { if (this.currentStep < 6) { this.currentStep++; this.renderStep(); } else this.showSummary(); },
+            prevStep() { if (this.currentStep > 1) { this.currentStep--; this.renderStep(); } },
+
+            showSummary() {
+                const triage = this.triage();
+                const report = { id: Date.now(), date: new Date().toLocaleString(), lang: this.selectedLang, ...this.state, triage };
+                const hist = JSON.parse(localStorage.getItem('mb_h') || '[]'); hist.unshift(report);
+                localStorage.setItem('mb_h', JSON.stringify(hist.slice(0, 10)));
+                
+                document.getElementById('view-intake').classList.add('hidden');
+                document.getElementById('view-summary').classList.remove('hidden');
+                this.renderSummary(report);
+            },
+
+            triage() {
+                for (const r of RULES) {
+                    let m = true;
+                    if (r.cond.bodyArea && r.cond.bodyArea !== this.state.bodyArea) m = false;
+                    if (r.cond.symptomType && r.cond.symptomType !== this.state.symptomType) m = false;
+                    if (r.cond.severity && r.cond.severity !== this.state.severity) m = false;
+                    if (r.cond.associated && !r.cond.associated.every(a => this.state.associated.includes(a))) m = false;
+                    if (m) return { p: r.priority, msg: r.msg };
+                }
+                if (this.state.severity === 'severe') return { p: 'mod', msg: 'Symptoms severe. Monitor closely.' };
+                return { p: 'low', msg: 'Standard case. Routine review.' };
+            },
+
+            renderSummary(r) {
+                const c = document.getElementById('summary-content');
+                document.getElementById('summary-main-title').innerText = this.t('summary_title');
+                c.innerHTML = `
+                    <div class="summary-item"><span class="summary-label">Language / Complaint</span><span class="summary-value">${r.lang.toUpperCase()} / ${r.symptomType} (${r.bodyArea})</span></div>
+                    <div class="summary-item"><span class="summary-label">Triage</span><div class="triage-badge triage-${r.triage.p}">${this.t(r.triage.p)}</div><p style="font-size:0.8rem; color:#64748b; margin-top:3px">${r.triage.msg}</p></div>
+                    <div class="summary-item"><span class="summary-label">Severity / Duration</span><span class="summary-value">${this.t(r.severity)} | ${this.t(r.duration)}</span></div>
+                    <div class="summary-item"><span class="summary-label">Associated</span><span class="summary-value">${r.associated.map(s => this.t(s)).join(', ') || 'None'}</span></div>
+                    <div class="summary-item" style="background:#f1f5f9; padding:0.75rem; border-radius:0.5rem;"><span class="summary-label">Clinical Note (English)</span><p style="font-style: italic; font-size:0.85rem;">Patient reports ${r.severity} ${r.symptomType} in ${r.bodyArea} area for ${r.duration.replace('_','-')}. Priority: ${r.triage.p.toUpperCase()}.</p></div>
+                `;
+                this.renderHistory();
+            },
+
+            renderHistory() {
+                const h = JSON.parse(localStorage.getItem('mb_h') || '[]');
+                document.getElementById('history-title').innerText = this.t('view_history');
+                document.getElementById('history-container').innerHTML = h.slice(1).map(i => `<div class="history-item"><strong>${i.date}</strong><br>${i.symptomType} (${i.bodyArea}) - ${i.triage.p.toUpperCase()}</div>`).join('') || '<p style="text-align:center; color:#94a3b8;">No history yet.</p>';
+            },
+
+            reset() { location.reload(); }
+        };
+    </script>
+</body>
+</html>
