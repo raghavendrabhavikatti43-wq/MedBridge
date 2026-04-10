@@ -73,10 +73,9 @@
             letter-spacing: -0.04em;
         }
 
-        /* The Horizontal Grid */
         .grid-horizontal {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Force 3 wide on desktop */
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -125,7 +124,6 @@
         .option-label { font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; }
         .option-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
 
-        /* Wizard Specifics */
         .wizard-card {
             background: white;
             padding: 3rem;
@@ -152,7 +150,7 @@
 
         .severity-row {
             display: flex;
-            flex-direction: row; /* Force Horizontal */
+            flex-direction: row;
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -191,7 +189,6 @@
         .action-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
         .action-secondary { background: #f1f5f9; color: var(--primary); }
 
-        /* Summary Grid */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -206,7 +203,7 @@
             border: 1px solid #e2e8f0;
         }
 
-        .triage-hero { /* Full width */
+        .triage-hero {
             grid-column: span 2;
             padding: 2.5rem;
             border-radius: 1.5rem;
@@ -295,10 +292,31 @@
     <script>
         const LANGS = {
             "en": { "q1": "Where is the problem?", "q2": "What kind of symptom?", "q3": "Select severity level", "q4": "Symptom duration?", "q5": "Associated issues?", "q6": "Any final remarks?", "head":"Head","chest":"Chest","abdomen":"Abdomen","throat":"Throat","back":"Back","limbs":"Limbs","pain":"Pain","fever":"Fever","cough":"Cough","vomiting":"Vomiting","breathlessness":"Shortness of breath","dizziness":"Fainting/Dizziness","mild":"Mild","mod":"Moderate","sev":"Severe","today":"Starts Today","1-2":"1-2 Days","week":"1 Week","long":"Chronic (>1w)","weakness":"General Weakness","bleeding":"Active Bleeding" },
-            "hi": { "q1": "समस्या कहाँ है?", "q2": "लक्षण क्या है?", "q3": "गंभीरता चुनें", "q4": "कब से है?", "q5": "अन्य समस्याएं?", "head":"सिर","chest":"छाती","abdomen":"पेट","throat":"गला","back":"पीठ","limbs":"हाथ-पांव" },
-            "te": { "q1": "సమస్య ఎక్కడ ఉంది?", "q2": "ఎలాంటి లక్షణం?", "q3": "తీవ్రత స్థాయి", "q4": "ఎప్పటి నుండి?", "head":"తల","chest":"ఛాతీ","abdomen":"కడుపు" },
-            "ta": { "q1": "பிரச்சனை எங்கே?", "q2": "அறிகுறி என்ன?", "q3": "தீவிரத்தன்மை?" },
-            "bn": { "q1": "সঙ্কট কোথায়?", "q2": "কি লক্ষণ?", "q3": "তীব্রতা কি?" }
+            "hi": { 
+                "q1": "समस्या कहाँ है?", "q2": "लक्षण क्या है?", "q3": "गंभीरता चुनें", "q4": "कब से है?", "q5": "अन्य समस्याएं?", "q6": "कोई टिप्पणी?",
+                "head":"सिर","chest":"छाती","abdomen":"पेट","throat":"गला","back":"पीठ","limbs":"हाथ-पांव",
+                "pain":"दर्द","fever":"बुखार","cough":"खांसी","vomiting":"उल्टी","breathlessness":"सांस फूलना","dizziness":"चक्कर",
+                "mild":"हल्का","mod":"मध्यम","sev":"गंभीर",
+                "today":"आज से","1-2":"1-2 दिन","week":"1 सप्ताह","long":"एक सप्ताह से अधिक"
+            },
+            "te": { 
+                "q1": "సమస్య ఎక్కడ ఉంది?", "q2": "ఎలాంటి లక్షణం?", "q3": "తీవ్రత స్థాయి", "q4": "ఎప్పటి నుండి?", "q5": "ఇతర సమస్యలు?", "q6": "గమనికలు?",
+                "head":"తల","chest":"ఛాతీ","abdomen":"కడుపు","throat":"గొంతు","back":"వెన్ను","limbs":"కాళ్లు చేతులు",
+                "pain":"నొప్పి","fever":"జ్వరం","cough":"దగ్గు","vomiting":"వాంతులు","breathlessness":"ఆయాసం","dizziness":"కళ్ళు తిరగడం",
+                "mild":"తక్కువ","mod":"మధ్యస్థం","sev":"ఎక్కువ",
+                "today":"ఈ రోజే","1-2":"1-2 రోజులు","week":"ఒక వారం","long":"వారం కంటే ఎక్కువ",
+                "weakness":"నీరసం","bleeding":"రక్తస్రావం"
+            },
+            "ta": { 
+                "q1": "பிரச்சனை எங்கே?", "q2": "அறிகுறி என்ன?", "q3": "தீவிரத்தன்மை?", "q4": "எவ்வளவு காலம்?", "q5": "பிற அறிகுறிகள்?",
+                "head":"தலை","chest":"நெஞ்சு","abdomen":"வயிறு","throat":"தொண்டை","back":"முதுகு","limbs":"கை கால்கள்",
+                "pain":"வலி","fever":"காய்ச்சல்","cough":"இருமல்","vomiting":"வாந்தி","breathlessness":"மூச்சுத்திணறல்"
+            },
+            "bn": { 
+                "q1": "সঙ্কট কোথায়?", "q2": "কি লক্ষণ?", "q3": "তীব্রতা কি?", "q4": "কতদিন?",
+                "head":"মাথা","chest":"বুক","abdomen":"পেট","throat":"গলা","back":"পিঠ","limbs":"হাত-পা",
+                "pain":"ব্যথা","fever":"জ্বর","cough":"কাশি"
+            }
         };
 
         const DATA = {
@@ -357,7 +375,7 @@
                 });
                 else if(this.step === 6) {
                     const tx = document.createElement('textarea'); tx.style.width='100%'; tx.style.padding='1.5rem'; tx.style.borderRadius='1.5rem';
-                    tx.placeholder = "Clinic notes..."; tx.rows=5; tx.value = this.form.note;
+                    tx.placeholder = this.t('q6'); tx.rows=5; tx.value = this.form.note;
                     tx.oninput = (e) => this.form.note = e.target.value; c.appendChild(tx);
                 }
 
