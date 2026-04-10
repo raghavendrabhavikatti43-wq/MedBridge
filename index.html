@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedBridge+ | Premium Clinical Experience</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
@@ -27,7 +29,12 @@
             --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
         body {
             background-color: var(--bg-base);
@@ -44,18 +51,32 @@
             position: fixed;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             z-index: -1;
             filter: blur(40px);
             animation: move 20s infinite alternate;
         }
-        .blob-1 { top: -100px; right: -100px; background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(255,255,255,0) 70%); }
-        .blob-2 { bottom: -100px; left: -100px; }
+
+        .blob-1 {
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+
+        .blob-2 {
+            bottom: -100px;
+            left: -100px;
+        }
 
         @keyframes move {
-            from { transform: translate(0, 0); }
-            to { transform: translate(50px, 100px); }
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(50px, 100px);
+            }
         }
 
         header {
@@ -78,8 +99,16 @@
             gap: 0.5rem;
             box-shadow: var(--shadow-soft);
         }
-        .logo-text { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; }
-        .logo-text span { color: var(--primary); }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
 
         main {
             flex: 1;
@@ -98,8 +127,15 @@
         }
 
         @keyframes pageIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Progress Indicator */
@@ -108,6 +144,7 @@
             margin: 0 auto 3rem auto;
             text-align: center;
         }
+
         .progress-label {
             font-size: 0.85rem;
             font-weight: 700;
@@ -116,6 +153,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+
         .progress-bar-bg {
             height: 8px;
             background: #e2e8f0;
@@ -123,6 +161,7 @@
             overflow: hidden;
             position: relative;
         }
+
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
@@ -154,31 +193,46 @@
         /* Interactive Grid */
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
+            margin-top: 1rem;
         }
 
         .interactive-card {
             background: white;
-            border: 2px solid transparent;
-            border-radius: var(--radius-lg);
+            border: 3px solid transparent;
+            border-radius: 2rem;
             padding: 2.5rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
         }
 
         .interactive-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--primary-light);
             box-shadow: var(--shadow-glow);
         }
 
-        .interactive-card:active { transform: scale(0.95); }
+        .interactive-card:active {
+            transform: scale(0.97);
+        }
+
+        .interactive-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+
+        .interactive-card.selected .icon-container {
+            transform: scale(1.1);
+            background: white;
+        }
 
         .icon-container {
             width: 80px;
@@ -188,102 +242,129 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-        }
-        .interactive-card:hover .icon-container {
-            background: var(--primary-light);
-            animation: pulse-icon 1.5s infinite;
+            font-size: 2.5rem;
+            margin-bottom: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        @keyframes pulse-icon {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .card-label {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
         }
 
-        .card-label { font-weight: 700; font-size: 1.15rem; }
-
-        /* Selected State */
-        .interactive-card.selected {
-            border-color: var(--primary);
-            background: linear-gradient(to bottom, #ffffff, #eff6ff);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
         .selected-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
+            top: 1rem;
+            right: 1rem;
+            width: 28px;
+            height: 28px;
+            background: var(--p-v);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-weight: 800;
+            font-size: 0.8rem;
             opacity: 0;
-            transform: scale(0);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.5);
+            transition: all 0.3s;
         }
-        .interactive-card.selected .selected-badge { opacity: 1; transform: scale(1); }
 
-        /* Severity Row */
+        .interactive-card.selected .selected-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Severity Meter */
         .sev-row {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
         }
+
         .sev-pill {
             flex: 1;
             padding: 1.5rem;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 1.25rem;
-            cursor: pointer;
+            border-radius: 1.5rem;
+            text-align: center;
             font-weight: 800;
             font-size: 1rem;
+            cursor: pointer;
+            border: 3px solid #e2e8f0;
             transition: all 0.3s;
-            text-align: center;
+            background: white;
         }
-        .sev-pill.active-low { border-color: var(--success); color: var(--success); background: #f0fdf4; }
-        .sev-pill.active-mod { border-color: var(--warning); color: var(--warning); background: #fffbeb; }
-        .sev-pill.active-sev { border-color: var(--danger); color: var(--danger); background: #fff1f2; }
 
-        /* Button Styling */
+        .active-mild {
+            border-color: #22c55e;
+            color: #22c55e;
+            background: #f0fdf4;
+            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.2);
+        }
+
+        .active-mod {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background: #fffbeb;
+            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.2);
+        }
+
+        .active-sev {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: #fef2f2;
+            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Footer Buttons */
         .btn-footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 3.5rem;
+            align-items: center;
+            margin-top: 3rem;
             gap: 1.5rem;
         }
+
         .main-btn {
-            flex: 1;
-            padding: 1.25rem 2rem;
-            border-radius: 1.25rem;
-            border: none;
-            font-weight: 800;
+            padding: 1.25rem 2.5rem;
+            border-radius: 1.5rem;
             font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
+            border: none;
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            flex: 1;
         }
+
         .btn-next {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.3);
         }
+
         .btn-next:hover:not(:disabled) {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
         }
-        .btn-next:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.7; }
-        .btn-back { background: #f1f5f9; color: var(--text-muted); }
+
+        .btn-next:disabled {
+            background: #cbd5e1;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
 
         /* Summary Dashboard */
         .summary-dashboard {
@@ -292,15 +373,28 @@
             gap: 1rem;
             text-align: left;
         }
+
         .dash-tile {
-            background: rgba(255,255,255,0.5);
+            background: rgba(255, 255, 255, 0.5);
             padding: 1.5rem;
             border-radius: 1.25rem;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
-        .tile-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .tile-val { font-size: 1.25rem; font-weight: 700; margin-top: 0.25rem; }
-        
+
+        .tile-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tile-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
         .triage-hero {
             grid-column: span 2;
             padding: 2rem;
@@ -308,28 +402,63 @@
             text-align: center;
             margin-bottom: 1rem;
         }
-        .hero-stable { background: #dcfce7; color: #166534; }
-        .hero-urgent { background: #fee2e2; color: #991b1b; animation: pulse-bg 2s infinite; }
+
+        .hero-stable {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .hero-urgent {
+            background: #fee2e2;
+            color: #991b1b;
+            animation: pulse-bg 2s infinite;
+        }
 
         @keyframes pulse-bg {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); opacity: 0.9; }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
-        .hidden { display: none; }
+        .hidden {
+            display: none;
+        }
 
         @media (max-width: 900px) {
-            .grid-layout { grid-template-columns: repeat(2, 1fr); }
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
+
         @media (max-width: 600px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            .summary-dashboard { grid-template-columns: 1fr; }
-            .triage-hero { grid-column: span 1; }
-            .sev-row { flex-direction: column; }
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .triage-hero {
+                grid-column: span 1;
+            }
+
+            .sev-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -346,7 +475,9 @@
             <!-- Progress -->
             <div id="progress-area" class="progress-container hidden">
                 <div class="progress-label">Patient Intake — Step <span id="cur-step-num">1</span> of 5</div>
-                <div class="progress-bar-bg"><div class="progress-fill" id="pb-fill"></div></div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="pb-fill"></div>
+                </div>
             </div>
 
             <!-- View: Lang -->
@@ -382,8 +513,10 @@
                     <h2 class="title" id="wiz-title">Question</h2>
                     <div id="wiz-content"></div>
                     <div class="btn-footer">
-                        <button class="main-btn btn-back" id="wiz-back" onclick="app.prev()">Back</button>
-                        <button class="main-btn btn-next" id="wiz-next" onclick="app.next()">Continue →</button>
+                        <button class="main-btn btn-back" id="wiz-back"
+                            onclick="app.prev()">${app.t('back_nav')}</button>
+                        <button class="main-btn btn-next" id="wiz-next" onclick="app.next()">${app.t('next_nav')}
+                            →</button>
                     </div>
                 </div>
             </div>
@@ -394,7 +527,8 @@
                     <h2 class="title" style="margin-bottom: 1.5rem;">Clinical Profile</h2>
                     <div id="summary-output"></div>
                     <div class="btn-footer">
-                        <button class="main-btn btn-next" onclick="location.reload()">New Patient Entry</button>
+                        <button class="main-btn btn-next" onclick="location.reload()" id="btn-final-new">New Patient
+                            Entry</button>
                     </div>
                 </div>
             </div>
@@ -402,126 +536,322 @@
     </main>
 
     <script>
-        const LANGS = {
-            "en": { "q1": "Where is the problem?", "q2": "Primary symptom types?", "q3": "Select severity level", "q4": "Symptom history?", "q5": "Associated symptoms?", "q6": "Clinical notes", "head":"Head","chest":"Chest","abdomen":"Abdomen","throat":"Throat","back":"Back","limbs":"Limbs","pain":"Pain","fever":"Fever/Chills","cough":"Dry Cough","vomiting":"Nausea/Vomiting","breathlessness":"Shortness of Breath","dizziness":"Dizziness","mild":"Mild","mod":"Moderate","sev":"Severe","today":"Starts Today","1-2":"1–2 Days","week":"3–7 Days","long":"Chronic (>1w)","weakness":"General Weakness","bleeding":"Bleeding" },
-            "hi": { "q1": "समस्या कहाँ है?", "head":"सिर","chest":"छाती","abdomen":"पेट" },
-            "te": { "q1": "సమస్య ఎక్కడ ఉంది?", "head":"తల","chest":"ఛాతీ","abdomen":"కడుపు","throat":"గొంతు","back":"వెన్ను","limbs":"కాళ్లు చేతులు" },
-            "ta": { "q1": "பிரச்சனை எங்கே?" },
-            "bn": { "q1": "সঙ্কট কোথায়?" }
+        let FULL_LANG_DATA = null;
+
+        const LANG_NAMES = {
+            en: 'English',
+            hi: 'हिन्दी (Hindi)',
+            te: 'తెలుగు (Telugu)',
+            ta: 'தமிழ் (Tamil)',
+            bn: 'বাংলা (Bengali)'
         };
 
+        async function fetchConfig() {
+            try {
+                const res = await fetch('/api/config');
+                const data = await res.json();
+                FULL_LANG_DATA = data.languages;
+            } catch (err) {
+                console.error('Failed to fetch config, falling back to local files');
+                const res = await fetch('data/languages.json');
+                FULL_LANG_DATA = await res.json();
+            }
+        }
+
         const DATA = {
-            areas: [{id:'head',icon:'🧠'},{id:'chest',icon:'🫁'},{id:'abdomen',icon:'🤢'},{id:'throat',icon:'🗣️'},{id:'back',icon:'🧘'},{id:'limbs',icon:'🦵'}],
-            types: [{id:'pain',icon:'⚡'},{id:'fever',icon:'🌡️'},{id:'cough',icon:'😷'},{id:'vomiting',icon:'🤮'},{id:'breathlessness',icon:'😮‍💨'},{id:'dizziness',icon:'🌀'}],
-            sevs: [{id:'mild'},{id:'mod'},{id:'sev'}],
-            durs: [{id:'today',icon:'🕛'},{id:'1-2',icon:'⏳'},{id:'week',icon:'🗓️'},{id:'long',icon:'⚠️'}],
-            extra: [{id:'fever',icon:'🌡️'},{id:'vomiting',icon:'🤮'},{id:'weakness',icon:'🔋'},{id:'breathlessness',icon:'😮‍💨'},{id:'bleeding',icon:'🩸'}]
+            areas: [{ id: 'head', icon: '🧠' }, { id: 'chest', icon: '🫁' }, { id: 'abdomen', icon: '🤢' }, { id: 'throat', icon: '🗣️' }, { id: 'back', icon: '🧘' }, { id: 'limbs', icon: '🦵' }],
+            types: [{ id: 'pain', icon: '⚡' }, { id: 'fever', icon: '🌡️' }, { id: 'cough', icon: '😷' }, { id: 'vomiting', icon: '🤮' }, { id: 'breathlessness', icon: '😮‍💨' }, { id: 'dizziness', icon: '🌀' }],
+            sevs: [{ id: 'mild', icon: '🟢' }, { id: 'moderate', icon: '🟡' }, { id: 'severe', icon: '🔴' }],
+            durs: [{ id: 'today', icon: '🕛' }, { id: '1_2_days', icon: '⏳' }, { id: '3_7_days', icon: '🗓️' }, { id: 'plus_1_week', icon: '⚠️' }],
+            extra: [{ id: 'fever', icon: '🌡️' }, { id: 'vomiting', icon: '🤮' }, { id: 'weakness', icon: '🔋' }, { id: 'breathlessness', icon: '😮‍💨' }, { id: 'bleeding', icon: '🩸' }]
         };
 
         const app = {
-            step: 1, lang: 'en', form: { area:null, type:null, sev:null, dur:null, extra:[], note:'' },
+            step: 1, lang: 'en', form: { areas: [], types: [], sevs: [], durs: [], extra: [], note: '' },
+            langData: null,
 
-            setLang(l) {
+            async setLang(l) {
+                if (!FULL_LANG_DATA) await fetchConfig();
                 this.lang = l;
+                this.langData = FULL_LANG_DATA[l];
                 document.getElementById('view-lang').classList.add('hidden');
                 document.getElementById('view-wizard').classList.remove('hidden');
                 document.getElementById('progress-area').classList.remove('hidden');
                 this.render();
             },
 
-            t(k) { return (LANGS[this.lang] && LANGS[this.lang][k]) || LANGS['en'][k] || k; },
+            t(k) { return (this.langData && this.langData[k]) || (FULL_LANG_DATA && FULL_LANG_DATA['en'] && FULL_LANG_DATA['en'][k]) || k; },
+            en(k) { return (FULL_LANG_DATA && FULL_LANG_DATA['en'] && FULL_LANG_DATA['en'][k]) || k; },
 
             render() {
                 const c = document.getElementById('wiz-content');
                 const t = document.getElementById('wiz-title');
                 const pb = document.getElementById('pb-fill');
                 const pnum = document.getElementById('cur-step-num');
-                
+
                 c.innerHTML = '';
                 t.innerText = this.t(`q${this.step}`);
                 pnum.innerText = this.step;
-                pb.style.width = `${((this.step-1)/5)*100}%`;
+                pb.style.width = `${((this.step - 1) / 4) * 100}%`;
 
                 const grid = document.createElement('div'); grid.className = 'grid-layout';
 
-                if(this.step === 1) DATA.areas.forEach(v => grid.appendChild(this.card(v, 'area')));
-                else if(this.step === 2) DATA.types.forEach(v => grid.appendChild(this.card(v, 'type')));
-                else if(this.step === 3) {
-                    const row = document.createElement('div'); row.className = 'sev-row';
+                if (this.step === 1) DATA.areas.forEach(v => grid.appendChild(this.card(v, 'areas')));
+                else if (this.step === 2) DATA.types.forEach(v => grid.appendChild(this.card(v, 'types')));
+                else if (this.step === 3) {
                     DATA.sevs.forEach(s => {
-                        const b = document.createElement('div'); b.className = `sev-pill ${this.form.sev===s.id?'active-'+s.id:''}`;
-                        b.innerText = this.t(s.id).toUpperCase();
-                        b.onclick = () => { this.form.sev = s.id; this.render(); };
-                        row.appendChild(b);
+                        const b = this.card(s, 'sevs');
+                        grid.appendChild(b);
                     });
-                    c.appendChild(row);
-                } else if(this.step === 4) DATA.durs.forEach(v => grid.appendChild(this.card(v, 'dur')));
-                else if(this.step === 5) DATA.extra.forEach(v => {
-                    const b = this.card(v, null); b.onclick = () => {
-                        if(this.form.extra.includes(v.id)) this.form.extra = this.form.extra.filter(x=>x!==v.id);
-                        else this.form.extra.push(v.id); this.render();
-                    };
-                    if(this.form.extra.includes(v.id)) b.classList.add('selected');
-                    grid.appendChild(b);
-                });
-                else if(this.step === 6) {
-                    const tx = document.createElement('textarea'); tx.style.width='100%'; tx.style.padding='1.5rem'; tx.style.borderRadius='1.5rem';
-                    tx.style.background='white'; tx.style.border='2px solid #e2e8f0'; tx.style.outline='none';
-                    tx.placeholder = "Clinic input..."; tx.rows=5; tx.value = this.form.note;
+                } else if (this.step === 4) DATA.durs.forEach(v => grid.appendChild(this.card(v, 'durs')));
+                else if (this.step === 5) DATA.extra.forEach(v => grid.appendChild(this.card(v, 'extra')));
+/* else if (this.step === 6) {
+                    const tx = document.createElement('textarea'); tx.style.width = '100%'; tx.style.padding = '1.5rem'; tx.style.borderRadius = '1.5rem';
+                    tx.style.background = 'white'; tx.style.border = '2px solid #e2e8f0'; tx.style.outline = 'none';
+                    tx.placeholder = this.t('step_6') + "..."; tx.rows = 5; tx.value = this.form.note;
                     tx.oninput = (e) => this.form.note = e.target.value; c.appendChild(tx);
-                }
+                } */
 
-                if(grid.childNodes.length > 0) c.appendChild(grid);
+                if (grid.childNodes.length > 0) c.appendChild(grid);
                 this.update();
             },
 
             card(item, key) {
                 const b = document.createElement('div');
-                b.className = `interactive-card ${key && this.form[key]===item.id?'selected':''}`;
-                b.innerHTML = `<div class="selected-badge">✓</div><div class="icon-container">${item.icon}</div><div class="card-label">${this.t(item.id)}</div>`;
-                if(key) b.onclick = () => { this.form[key] = item.id; this.render(); };
+                const isSelected = this.form[key].includes(item.id);
+                b.className = `interactive-card ${isSelected ? 'selected' : ''}`;
+                b.innerHTML = `<div class="selected-badge">✓</div><div class="icon-container">${item.icon || '📍'}</div><div class="card-label">${this.t(item.id)}</div>`;
+                b.onclick = () => {
+                    if (isSelected) {
+                        this.form[key] = this.form[key].filter(id => id !== item.id);
+                    } else {
+                        this.form[key].push(item.id);
+                    }
+                    this.render();
+                };
                 return b;
             },
 
             update() {
                 const nb = document.getElementById('wiz-back');
                 nb.style.visibility = this.step === 1 ? 'hidden' : 'visible';
+                nb.innerText = this.t('back_nav');
                 const next = document.getElementById('wiz-next');
-                next.innerText = this.step === 6 ? 'Finalize Patient Report' : 'Next Question →';
-                const valid = [null, this.form.area, this.form.type, this.form.sev, this.form.dur][this.step];
-                next.disabled = [1,2,3,4].includes(this.step) && !valid;
+                next.innerText = this.step === 5 ? this.t('submit') : this.t('next_nav') + ' →';
+                const currentArray = [null, this.form.areas, this.form.types, this.form.sevs, this.form.durs][this.step];
+                next.disabled = [1, 2, 3, 4].includes(this.step) && (!currentArray || currentArray.length === 0);
             },
 
-            next() { if(this.step < 6) { this.step++; this.render(); } else this.submit(); },
-            prev() { if(this.step > 1) { this.step--; this.render(); } },
+            next() { if (this.step < 5) { this.step++; this.render(); } else this.submit(); },
+            prev() { if (this.step > 1) { this.step--; this.render(); } },
 
-            submit() {
+            runTriage() {
+                const areas = this.form.areas;
+                const types = this.form.types;
+                const sevs = this.form.sevs;
+                const durs = this.form.durs;
+                const extra = this.form.extra;
+
+                // RED FLAG: Chest pain with breathlessness
+                if (areas.includes('chest') && types.includes('pain') && extra.includes('breathlessness')) {
+                    return { priority: 'high', message: 'Immediate Medical Attention Required — Possible Cardiac Event' };
+                }
+                // RED FLAG: Chest pain (any)
+                if (areas.includes('chest') && types.includes('pain')) {
+                    return { priority: 'high', message: 'Chest Pain Detected — Urgent Cardiac Evaluation Needed' };
+                }
+                // RED FLAG: Severe with fever + breathlessness
+                if (sevs.includes('severe') && types.includes('fever') && extra.includes('breathlessness')) {
+                    return { priority: 'high', message: 'Severe Respiratory Distress — Immediate Intervention Required' };
+                }
+                // RED FLAG: Head pain + severe + vomiting
+                if (areas.includes('head') && types.includes('pain') && sevs.includes('severe') && extra.includes('vomiting')) {
+                    return { priority: 'high', message: 'Severe Neurological Concern — Possible Intracranial Pressure' };
+                }
+                // RED FLAG: Severe abdominal vomiting
+                if (areas.includes('abdomen') && types.includes('vomiting') && sevs.includes('severe')) {
+                    return { priority: 'high', message: 'Acute Abdominal Distress — Surgical Consultation Advised' };
+                }
+                // RED FLAG: Any severe symptom
+                if (sevs.includes('severe')) {
+                    return { priority: 'high', message: 'Severe Symptoms Reported — Priority Medical Assessment Required' };
+                }
+                // RED FLAG: Bleeding as associated
+                if (extra.includes('bleeding') && sevs.includes('moderate')) {
+                    return { priority: 'high', message: 'Active Bleeding with Moderate Symptoms — Urgent Evaluation' };
+                }
+                // MODERATE: Moderate symptoms lasting >1 week
+                if (sevs.includes('moderate') && durs.includes('plus_1_week')) {
+                    return { priority: 'moderate', message: 'Persistent Moderate Symptoms — Professional Review Recommended' };
+                }
+                // MODERATE: Fever with any severity
+                if (types.includes('fever') && (sevs.includes('moderate') || durs.includes('3_7_days'))) {
+                    return { priority: 'moderate', message: 'Prolonged or Moderate Fever — Further Investigation Advised' };
+                }
+                // LOW: Default
+                return { priority: 'low', message: 'Standard Case — Routine Observation and Follow-up' };
+            },
+
+            async translateNote(text, from) {
+                if (!text) return text;
+                if (from === 'en') return text;
+                
+                try {
+                    // Using Google's unofficial fast API which is excellent for transliterated text (nenu emi...)
+                    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(text)}`;
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    
+                    // The response format is deeply nested: [[["translated_text", "original_text", ...]]]
+                    if (data && data[0] && data[0][0] && data[0][0][0]) {
+                        return data[0][0][0];
+                    }
+                    return text;
+                } catch (e) {
+                    console.error("Translation fail:", e);
+                    return text;
+                }
+            },
+
+            async submit() {
+                const nextBtn = document.getElementById('wiz-next');
+                const originalText = nextBtn.innerText;
+                nextBtn.innerText = "Translating..."; 
+                nextBtn.disabled = true;
+
+                const translatedNote = await this.translateNote(this.form.note, this.lang);
+                
+                const triage = this.runTriage();
+                const triageLocalized = {
+                    priority: triage.priority,
+                    message: triage.priority === 'high' ? this.t('urgent_care') : this.t('stable_condition')
+                };
+
+                const report = {
+                    lang: this.lang,
+                    bodyArea: this.form.areas.join(', '),
+                    symptomType: this.form.types.join(', '),
+                    severity: this.form.sevs.join(', '),
+                    duration: this.form.durs.join(', '),
+                    associatedSymptoms: this.form.extra,
+                    notes: this.form.note,
+                    translatedNote: translatedNote,
+                    priority: triage.priority,
+                    triage: triageLocalized
+                };
+
+                try {
+                    await fetch('/api/reports', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(report)
+                    });
+                } catch (err) {
+                    console.error('Failed to save to backend:', err);
+                }
+
                 document.getElementById('view-wizard').classList.add('hidden');
                 document.getElementById('progress-area').classList.add('hidden');
                 document.getElementById('view-summary').classList.remove('hidden');
-                const high = (this.form.area === 'chest' && this.form.type === 'pain') || (this.form.sev === 'sev');
+
+                this.renderSummary(triage, translatedNote);
+            },
+
+            renderSummary(triage, translatedNote) {
+                const high = triage.priority === 'high';
+                const mod = triage.priority === 'moderate';
+                const heroClass = high ? 'hero-urgent' : 'hero-stable';
+
                 const out = document.getElementById('summary-output');
+                document.getElementById('btn-final-new').innerText = this.t('new_intake');
+
+                // Build translated values for the localized summary tiles
+                const langDisplay = LANG_NAMES[this.lang] || this.lang;
+                const areasLocalized = this.form.areas.map(a => this.t(a)).join(', ');
+                const typesLocalized = this.form.types.map(t => this.t(t)).join(', ');
+                const sevsLocalized = this.form.sevs.map(s => this.t(s)).join(', ');
+                const dursLocalized = this.form.durs.map(d => this.t(d)).join(', ');
+                const extraLocalized = this.form.extra.length > 0 ? this.form.extra.map(e => this.t(e)).join(', ') : this.t('no');
+
+                // Build English values for Clinical Brief (always English for doctor)
+                const areasEn = this.form.areas.map(a => this.en(a)).join(', ');
+                const typesEn = this.form.types.map(t => this.en(t)).join(', ');
+                const sevsEn = this.form.sevs.map(s => this.en(s)).join(', ');
+                const dursEn = this.form.durs.map(d => this.en(d)).join(', ');
+                const extraEn = this.form.extra.length > 0 ? this.form.extra.map(e => this.en(e)).join(', ') : 'None reported';
+                // Handle patient notes — flag language for doctor
+                const langEnName = LANG_NAMES[this.lang] || this.lang;
+                let notesSection;
+                if (!this.form.note || this.form.note.trim() === '') {
+                    notesSection = 'ADDITIONAL NOTES: No additional notes provided.';
+                } else if (this.lang === 'en') {
+                    notesSection = `ADDITIONAL NOTES: ${this.form.note}`;
+                } else {
+                    notesSection = `ADDITIONAL NOTES (Auto-translated to English):
+"${translatedNote}"
+
+ORIGINAL [${langEnName}]:
+"${this.form.note}"`;
+                }
+
+                // Construct professional English clinical brief
+                const clinicalBrief = `PRESENTING COMPLAINT: Patient presents with ${sevsEn.toLowerCase()} ${typesEn.toLowerCase()} localized to the ${areasEn.toLowerCase()} region(s).
+
+DURATION: Symptoms onset reported as ${dursEn.toLowerCase()}.
+
+ASSOCIATED SYMPTOMS: ${extraEn}.
+
+${notesSection}
+
+TRIAGE ASSESSMENT: ${triage.priority.toUpperCase()} PRIORITY — ${triage.message}.`;
+
+
                 out.innerHTML = `
-                    <div class="triage-hero ${high?'hero-urgent':'hero-stable'}">
-                        <div style="font-size: 0.8rem; font-weight:800; opacity:0.8; letter-spacing:0.1em; margin-bottom:0.25rem">TRIAGE PRIORITY</div>
-                        <div style="font-size: 1.75rem; font-weight: 800;">${high?'URGENT CARE REQUIRED':'STABLE CONDITION'}</div>
+                    <div class="triage-hero ${heroClass}">
+                        <div style="font-size: 0.8rem; font-weight:800; opacity:0.8; letter-spacing:0.1em; margin-bottom:0.25rem">${this.t('priority')}</div>
+                        <div style="font-size: 1.75rem; font-weight: 800;">${triage.priority === 'high' ? this.t('urgent_care') : this.t('stable_condition')}</div>
+                        <div style="margin-top:0.5rem; font-size:0.9rem; opacity:0.85; font-weight:600;">${triage.message}</div>
                     </div>
                     <div class="summary-dashboard">
-                        <div class="dash-tile"><div class="tile-label">Language</div><div class="tile-val">${this.lang.toUpperCase()}</div></div>
-                        <div class="dash-tile"><div class="tile-label">Complaint</div><div class="tile-val">${this.t(this.form.type)}</div></div>
-                        <div class="dash-tile"><div class="tile-label">Zone</div><div class="tile-val">${this.t(this.form.area)}</div></div>
-                        <div class="dash-tile"><div class="tile-label">Onset</div><div class="tile-val">${this.t(this.form.dur)} ago</div></div>
-                        <div class="dash-tile" style="grid-column: span 2; background: white; border: 2px dashed #cbd5e1;">
-                            <div class="tile-label">Clinical Brief (English)</div>
-                            <p style="font-style:italic; font-weight:600; margin-top:5px; line-height:1.4">
-                                Patient reports ${this.form.sev} ${this.form.type} in the ${this.form.area} region. Onset: ${this.form.dur}. 
-                                Associated: ${this.form.extra.length?this.form.extra.join(', '):'None'}. Triage: ${high?'URGENT':'ROUTINE'}.
-                            </p>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('select_language')}</div>
+                            <div class="tile-val">${langDisplay}</div>
+                        </div>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('complaint')}</div>
+                            <div class="tile-val">${typesLocalized}</div>
+                        </div>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('zone')}</div>
+                            <div class="tile-val">${areasLocalized}</div>
+                        </div>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('step_3')}</div>
+                            <div class="tile-val">${sevsLocalized}</div>
+                        </div>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('onset')}</div>
+                            <div class="tile-val">${dursLocalized}</div>
+                        </div>
+                        <div class="dash-tile">
+                            <div class="tile-label">${this.t('step_5')}</div>
+                            <div class="tile-val">${extraLocalized}</div>
+                        </div>
+                        <div class="dash-tile" style="grid-column: span 2;">
+                            <div class="tile-label">${this.t('step_6')}</div>
+                            <div class="tile-val" style="font-size:1rem;">${this.form.note || '-'}</div>
+                        </div>
+
+                        <div class="dash-tile" style="grid-column: span 2; background: #f8fafc; border: 2px solid #e2e8f0;">
+                            <div class="tile-label" style="color: #1e40af;">📋 ${this.t('clinical_brief')}</div>
+                            <pre style="font-family: 'Plus Jakarta Sans', sans-serif; font-size:0.95rem; font-weight:600; margin-top:8px; line-height:1.7; color: #1e293b; white-space: pre-wrap; word-wrap: break-word;">${clinicalBrief}</pre>
                         </div>
                     </div>
                 `;
             }
         };
+        fetchConfig();
     </script>
 </body>
+
 </html>

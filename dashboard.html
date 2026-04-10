@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedBridge+ | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+    <style>
+        :root {
+            --p-v: #6366f1;
+            --p-c: #06b6d4;
+            --p-e: #10b981;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            background: radial-gradient(circle at 50% -20%, #1e293b, #0f172a);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(to right, var(--p-c), var(--p-v)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .stat-card::before {
+            content: ""; position: absolute; top:0; left:0; width:4px; height:100%;
+        }
+        .stat-card.total::before { background: var(--p-c); }
+        .stat-card.high::before { background: #ef4444; }
+        .stat-card.latest::before { background: var(--p-e); }
+
+        .stat-val { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -1px; }
+        .stat-label { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; letter-spacing: 0.1em; }
+
+        .table-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.5rem; text-align: left; }
+        th { background: rgba(255,255,255,0.05); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); }
+        td { border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+
+        .badge {
+            padding: 0.5rem 1rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 800;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+        .badge-low { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .badge-low::before { background: #10b981; }
+        .badge-mod { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .badge-mod::before { background: #f59e0b; }
+        .badge-high { background: rgba(239, 68, 68, 0.1); color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
+        .badge-high::before { background: #ef4444; }
+
+        .refresh-btn {
+            background: white; color: var(--bg); border: none; padding: 0.75rem 1.5rem;
+            border-radius: 1rem; cursor: pointer; font-weight: 700; transition: all 0.3s;
+        }
+        .refresh-btn:hover { background: var(--p-c); transform: scale(1.05); }
+
+        @media (max-width: 768px) {
+            .stats { grid-template-columns: 1fr; }
+            th:nth-child(4), td:nth-child(4) { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MedBridge+ Command Center</h1>
+        <button class="refresh-btn" onclick="loadData()">Sync Assets</button>
+    </header>
+
+    <div class="stats">
+        <div class="stat-card total">
+            <div id="stat-total" class="stat-val">0</div>
+            <div class="stat-label">Total Inflow</div>
+        </div>
+        <div class="stat-card high">
+            <div id="stat-high" class="stat-val" style="color:#ef4444">0</div>
+            <div class="stat-label">Critical Alerts</div>
+        </div>
+        <div class="stat-card latest">
+            <div id="stat-latest" class="stat-val">--:--</div>
+            <div class="stat-label">Last Synchronization</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Temporal Stamp</th>
+                    <th>Clinical Complaint</th>
+                    <th>Physiological Zone</th>
+                    <th>Triage Priority</th>
+                    <th>Clinical Observations</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            <!-- Data will be injected here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('/api/reports');
+                const data = await response.json();
+                renderStats(data);
+                renderTable(data);
+            } catch (err) {
+                console.error('Failed to load dashboard data', err);
+            }
+        }
+
+        function renderStats(data) {
+            document.getElementById('stat-total').innerText = data.length;
+            document.getElementById('stat-high').innerText = data.filter(r => r.priority === 'high').length;
+            if (data.length > 0) {
+                const latest = new Date(data[0].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('stat-latest').innerText = latest;
+            }
+        }
+
+        function renderTable(data) {
+            const body = document.getElementById('table-body');
+            body.innerHTML = data.map(r => `
+                <tr>
+                    <td>${new Date(r.timestamp).toLocaleString()}</td>
+                    <td>${r.symptomType}</td>
+                    <td>${r.bodyArea}</td>
+                    <td><span class="badge badge-${r.priority}">${r.priority.toUpperCase()}</span></td>
+                    <td>${r.notes || '-'}</td>
+                </tr>
+            `).join('') || '<tr><td colspan="5" style="text-align:center">No reports yet</td></tr>';
+        }
+
+        loadData();
+        setInterval(loadData, 30000); // Auto refresh every 30s
+    </script>
+</body>
+</html>

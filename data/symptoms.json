@@ -16,15 +16,15 @@
     { "id": "dizziness", "icon": "🌀" }
   ],
   "severities": [
-    { "id": "mild", "color": "#4caf50" },
-    { "id": "moderate", "color": "#ff9800" },
-    { "id": "severe", "color": "#f44336" }
+    { "id": "mild", "icon": "🟢", "color": "#4caf50" },
+    { "id": "moderate", "icon": "🟡", "color": "#ff9800" },
+    { "id": "severe", "icon": "🔴", "color": "#f44336" }
   ],
   "durations": [
-    { "id": "today" },
-    { "id": "1_2_days" },
-    { "id": "3_7_days" },
-    { "id": "plus_1_week" }
+    { "id": "today", "icon": "🕛" },
+    { "id": "1_2_days", "icon": "⏳" },
+    { "id": "3_7_days", "icon": "🗓️" },
+    { "id": "plus_1_week", "icon": "⚠️" }
   ],
   "associatedSymptoms": [
     { "id": "fever", "icon": "🌡️" },
